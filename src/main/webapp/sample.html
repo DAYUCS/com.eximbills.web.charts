@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html ng-app="chartApp">
+<head>
+    <title>AngularJS Charts with CanvasJS</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="js/canvasjs.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.6/angular.min.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/controllers.js"></script>
+    <script src="js/directives.js"></script>
+    <style>
+        .container {
+            margin-top: 40px;
+            width: 970px !important;
+        }
+        #chartContainer {
+            margin-top: 30px;
+            height: 500px; 
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <div class="container" ng-controller="ChartController">
+        <div class="row">
+            <div class="col-xs-12">
+                <ul class="nav nav-tabs" mc-toggle-active>
+                    <li class="active"><a href="" ng-click="changeChartType('bar')">Bar</a></li>
+                    <li><a href="" ng-click="changeChartType('column')">Column</a></li>
+                    <li><a href="" ng-click="changeChartType('line')">Line</a></li>
+                    <li><a href="" ng-click="changeChartType('area')">Area</a></li>
+                    <li><a href="" ng-click="changeChartType('pie')">Pie</a></li>
+                    <li><a href="" ng-click="changeChartType('doughnut')">Doughnut</a></li>
+                    <li><a href="" ng-click="changeChartType('scatter')">Scatter</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12">
+                <div id="chartContainer"></div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
