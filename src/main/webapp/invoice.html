@@ -12,8 +12,14 @@
     <script src="js/canvasjs.min.js"></script>
     <script src="js/invoiceApp.js"></script>
 </head>
-<body>
-<div id="chartContainer" style="height: 300px; width: 100%;">
+<body ng-app="invoiceAppModule" ng-controller="InvoiceAppController as invApp">
+<div class="row">
+    <div class="col-md-1"></div>
+    <div class="col-md-10">
+        <div id="chartContainer" style="height: 300px; width: 100%;">
+        </div>
+    </div>
+    <div class="col-md-1"></div>
 </div>
 </body>
 </html>
