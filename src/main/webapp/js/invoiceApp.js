@@ -25,6 +25,9 @@ app.controller('InvoiceAppController', function ($http, $location, $uibModal) {
             },
             data: [
                 {
+                    click: function (e) {
+                        alert("dataSeries Event => Type: " + e.dataSeries.type + ", dataPoint { x:" + e.dataPoint.x + ", y: " + e.dataPoint.y + ", label: " + e.dataPoint.label +" }");
+                    },
                     type: "scatter",
                     toolTipContent: "{label} <hr/> date: {x}, value: {y}",
                     dataPoints: [
