@@ -23,12 +23,14 @@
 </div>
 <div class="row">
     <div class="col-md-1"></div>
-    <div ng-show="invApp.selectedInv.referenceNumber" class="col-md-10 panel-body">
-        <ul>
-            <li>Reference Number: {{invApp.selectedInv.referenceNumber}}</li>
-            <li>Face Value: {{invApp.selectedInv.faceValue}}</li>
-            <li>Maturity Date: {{invApp.selectedInv.maturityDate}}</li>
-        </ul>
+    <div class="col-md-10">
+        <div ng-show="invApp.selectedInv.referenceNumber" class="panel panel-primary">
+            <ul>
+                <li>Reference Number: {{invApp.selectedInv.referenceNumber}}</li>
+                <li>Face Value: {{invApp.selectedInv.faceValue}}</li>
+                <li>Maturity Date: {{invApp.selectedInv.maturityDate}}</li>
+            </ul>
+        </div>
     </div>
     <div class="col-md-1"></div>
 </div>
