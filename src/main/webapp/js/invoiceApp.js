@@ -5,11 +5,17 @@ app.config(['$qProvider', function ($qProvider) {
     $qProvider.errorOnUnhandledRejections(false);
 }]);
 
-app.controller('InvoiceAppController', function ($http, $location, $uibModal) {
+app.controller('InvoiceAppController', function ($http, $location, $uibModal, $scope) {
     const invApp = this;
 
     // We identify the node.
     const apiBaseURL = "/api/example/";
+
+    invApp.selectedInv = {
+        referenceNumber: "",
+        faceValue: 0,
+        maturityDate: Date(2017, 01, 1)
+    };
 
     invApp.chart = new CanvasJS.Chart("chartContainer",
         {
@@ -26,7 +32,13 @@ app.controller('InvoiceAppController', function ($http, $location, $uibModal) {
             data: [
                 {
                     click: function (e) {
-                        alert("dataSeries Event => Type: " + e.dataSeries.type + ", dataPoint { x:" + e.dataPoint.x + ", y: " + e.dataPoint.y + ", label: " + e.dataPoint.label +" }");
+
+                        invApp.selectedInv.referenceNumber = e.dataPoint.label;
+                        invApp.selectedInv.faceValue = e.dataPoint.y;
+                        invApp.selectedInv.maturityDate = e.dataPoint.x;
+
+                        //alert("dataSeries Event => Type: " + e.dataSeries.type + ", dataPoint { x:" + invApp.selectedInv.maturityDate + ", y: " + invApp.selectedInv.faceValue + ", label: " + invApp.selectedInv.referenceNumber + " }");
+                        $scope.$apply();;
                     },
                     type: "scatter",
                     toolTipContent: "{label} <hr/> date: {x}, value: {y}",
