@@ -63,45 +63,45 @@ app.controller('InvoiceAppController', function ($http, $location, $uibModal, $s
 
     // invApp.dataPoints should be derived from invApp.invoices
     invApp.dataPoints = [
-        {x: new Date(2017, 01, 1), y: 1100},
-        {x: new Date(2017, 01, 2), y: 2250},
+        {x: new Date(2017, 01, 1), y: 1100, label: 1},
+        {x: new Date(2017, 01, 2), y: 2250, label: 2},
 
-        {x: new Date(2017, 01, 3), y: 1280},
-        {x: new Date(2017, 01, 4), y: 1600},
+        {x: new Date(2017, 01, 3), y: 1280, label: 1},
+        {x: new Date(2017, 01, 4), y: 1600, label: 1},
 
-        {x: new Date(2017, 01, 5), y: 2200},
-        {x: new Date(2017, 01, 6), y: 2200},
-        {x: new Date(2017, 01, 7), y: 2200},
-        {x: new Date(2017, 01, 8), y: 2200},
-        {x: new Date(2017, 01, 9), y: 2530},
-        {x: new Date(2017, 01, 11), y: 3040},
+        {x: new Date(2017, 01, 5), y: 2200, label: 1},
+        {x: new Date(2017, 01, 6), y: 2200, label: 1},
+        {x: new Date(2017, 01, 7), y: 2200, label: 1},
+        {x: new Date(2017, 01, 8), y: 2200, label: 1},
+        {x: new Date(2017, 01, 9), y: 2530, label: 1},
+        {x: new Date(2017, 01, 11), y: 3040, label: 1},
 
-        {x: new Date(2017, 01, 13), y: 4030},
-        {x: new Date(2017, 01, 14), y: 3040},
-        {x: new Date(2017, 01, 18), y: 4060},
-        {x: new Date(2017, 01, 20), y: 4040},
-        {x: new Date(2017, 01, 22), y: 5100},
-        {x: new Date(2017, 01, 23), y: 10250},
+        {x: new Date(2017, 01, 13), y: 4030, label: 1},
+        {x: new Date(2017, 01, 14), y: 3040, label: 1},
+        {x: new Date(2017, 01, 18), y: 4060, label: 1},
+        {x: new Date(2017, 01, 20), y: 4040, label: 1},
+        {x: new Date(2017, 01, 22), y: 5100, label: 1},
+        {x: new Date(2017, 01, 23), y: 10250, label: 3},
 
-        {x: new Date(2017, 01, 28), y: 8210},
-        {x: new Date(2017, 01, 31), y: 8040},
-        {x: new Date(2017, 02, 1), y: 9060},
-        {x: new Date(2017, 02, 4), y: 8300},
-        {x: new Date(2017, 02, 5), y: 9300},
-        {x: new Date(2017, 02, 7), y: 6300},
-        {x: new Date(2017, 02, 11), y: 9900},
-        {x: new Date(2017, 02, 20), y: 4200},
-        {x: new Date(2017, 02, 28), y: 8200},
+        {x: new Date(2017, 01, 28), y: 8210, label: 1},
+        {x: new Date(2017, 01, 31), y: 8040, label: 1},
+        {x: new Date(2017, 02, 1), y: 9060, label: 1},
+        {x: new Date(2017, 02, 4), y: 8300, label: 1},
+        {x: new Date(2017, 02, 5), y: 9300, label: 1},
+        {x: new Date(2017, 02, 7), y: 6300, label: 1},
+        {x: new Date(2017, 02, 11), y: 9900, label: 1},
+        {x: new Date(2017, 02, 20), y: 4200, label: 1},
+        {x: new Date(2017, 02, 28), y: 8200, label: 1},
 
-        {x: new Date(2017, 03, 5), y: 9040},
-        {x: new Date(2017, 03, 8), y: 9200},
-        {x: new Date(2017, 03, 11), y: 7020},
-        {x: new Date(2017, 03, 19), y: 9040},
-        {x: new Date(2017, 03, 20), y: 9030},
-        {x: new Date(2017, 03, 25), y: 10120},
-        {x: new Date(2017, 03, 30), y: 4020},
+        {x: new Date(2017, 03, 5), y: 9040, label: 1},
+        {x: new Date(2017, 03, 8), y: 9200, label: 1},
+        {x: new Date(2017, 03, 11), y: 7020, label: 1},
+        {x: new Date(2017, 03, 19), y: 9040, label: 1},
+        {x: new Date(2017, 03, 20), y: 9030, label: 1},
+        {x: new Date(2017, 03, 25), y: 10120, label: 1},
+        {x: new Date(2017, 03, 30), y: 4020, label: 1},
 
-        {x: new Date(2017, 04, 5), y: 13400}
+        {x: new Date(2017, 04, 5), y: 13400, label: 1}
     ];
 
     invApp.selectedInvoices = [];
@@ -116,7 +116,7 @@ app.controller('InvoiceAppController', function ($http, $location, $uibModal, $s
                 gridThickness: 2
             },
             axisY: {
-                title: "face value"
+                title: "face value (USD)"
             },
             data: [
                 {
@@ -126,7 +126,7 @@ app.controller('InvoiceAppController', function ($http, $location, $uibModal, $s
                         $scope.$apply();
                     },
                     type: "column",
-                    toolTipContent: "date: {x}, total: {y}",
+                    toolTipContent: "date: {x} <hr/> No. of Invoices: {label}, total: {y}",
                 }
             ]
         });
