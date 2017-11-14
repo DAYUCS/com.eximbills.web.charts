@@ -38,7 +38,7 @@ app.controller('InvoiceAppController', function ($http, $location, $uibModal, $s
                         invApp.selectedInv.maturityDate = e.dataPoint.x;
 
                         //alert("dataSeries Event => Type: " + e.dataSeries.type + ", dataPoint { x:" + invApp.selectedInv.maturityDate + ", y: " + invApp.selectedInv.faceValue + ", label: " + invApp.selectedInv.referenceNumber + " }");
-                        $scope.$apply();;
+                        $scope.$apply();
                     },
                     type: "scatter",
                     toolTipContent: "{label} <hr/> date: {x}, value: {y}",
