@@ -27,7 +27,7 @@ app.controller('InvoiceAppController', function ($http, $location, $uibModal, $s
                 gridThickness: 2
             },
             axisY: {
-                title: "face value"
+                title: "face value (USD)"
             },
             data: [
                 {
