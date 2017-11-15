@@ -4,7 +4,7 @@ app.controller('InvoiceAppController', function ($http, $scope) {
     const invApp = this;
 
     // Identify the rest api node.
-    const apiBaseURL = "http://localhost:9080/rest/invoice";
+    const apiBaseURL = "/rest/invoice";
 
     invApp.invoices = [];
 
@@ -30,12 +30,9 @@ app.controller('InvoiceAppController', function ($http, $scope) {
             data: [
                 {
                     click: function (e) {
-
                         invApp.selectedInv.referenceNumber = e.dataPoint.name;
                         invApp.selectedInv.faceValueInUSD = e.dataPoint.y;
                         invApp.selectedInv.maturityDate = e.dataPoint.x;
-
-                        //alert("dataSeries Event => Type: " + e.dataSeries.type + ", dataPoint { x:" + invApp.selectedInv.maturityDate + ", y: " + invApp.selectedInv.faceValue + ", label: " + invApp.selectedInv.referenceNumber + " }");
                         $scope.$apply();
                     },
                     type: "scatter",
@@ -50,16 +47,15 @@ app.controller('InvoiceAppController', function ($http, $scope) {
     $http.get(apiBaseURL)
         .then(function success(response) {
             invApp.invoices = response.data;
-            invApp.invoices.forEach(function(item){
-                invApp.chart.options.data[0].dataPoints.push({x: new Date(item.maturityDate), y: item.faceValueInUSD, name: item.referenceNumber});
+            invApp.invoices.forEach(function (item) {
+                invApp.chart.options.data[0].dataPoints.push({
+                    x: new Date(item.maturityDate),
+                    y: item.faceValueInUSD,
+                    name: item.referenceNumber
+                });
             });
-            //invApp.chart.options.data[0].dataPoints = invApp.invoices;
-            //alert("invoice number: " + invApp.chart.options.data[0].dataPoints.length);
-            //alert("invoice[0]" + invApp.chart.options.data[0].dataPoints[0].x
-            //    + " - " + invApp.chart.options.data[0].dataPoints[0].y
-            //    + " - " + invApp.chart.options.data[0].dataPoints[0].label);
             invApp.chart.render();
-        },function error(response) {
+        }, function error(response) {
             alert("Cannot get data from server!" + response);
         });
 

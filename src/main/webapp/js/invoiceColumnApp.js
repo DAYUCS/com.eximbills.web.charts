@@ -4,66 +4,15 @@ app.controller('InvoiceAppController', function ($http, $scope) {
     const invApp = this;
 
     // We identify the node.
-    const apiBaseURL = "/api/example/";
+    const apiBaseURL = "/rest/invoice";
 
     invApp.selectedDate = new Date(2017, 01, 1);
 
     function filterByDate(invoice) {
-        return invoice.x.getTime() === invApp.selectedDate.getTime();
+        return (new Date(invoice.maturityDate)).getTime() === invApp.selectedDate.getTime();
     };
 
-    invApp.invoices = [
-        {x: new Date(2017, 01, 1), y: 1100, indexLabel: "INV17000001"},
-        {x: new Date(2017, 01, 2), y: 1200, indexLabel: "INV17000002"},
-        {x: new Date(2017, 01, 2), y: 1250, indexLabel: "INV17000003"},
-        {x: new Date(2017, 01, 3), y: 1280, indexLabel: "INV17000004"},
-        {x: new Date(2017, 01, 4), y: 1600, indexLabel: "INV17000005"},
-
-        {x: new Date(2017, 01, 5), y: 2200, indexLabel: "INV17000006"},
-        {x: new Date(2017, 01, 6), y: 2200, indexLabel: "INV17000007"},
-        {x: new Date(2017, 01, 7), y: 2200, indexLabel: "INV17000008"},
-        {x: new Date(2017, 01, 8), y: 2200, indexLabel: "INV17000009"},
-        {x: new Date(2017, 01, 9), y: 2530, indexLabel: "INV17000010"},
-        {x: new Date(2017, 01, 11), y: 3040, indexLabel: "INV17000011"},
-
-        {x: new Date(2017, 01, 13), y: 4030, indexLabel: "INV17000012"},
-        {x: new Date(2017, 01, 14), y: 3040, indexLabel: "INV17000013"},
-        {x: new Date(2017, 01, 18), y: 4060, indexLabel: "INV17000014"},
-        {x: new Date(2017, 01, 20), y: 4040, indexLabel: "INV17000015"},
-        {x: new Date(2017, 01, 22), y: 5100, indexLabel: "INV17000016"},
-        {x: new Date(2017, 01, 23), y: 4200, indexLabel: "INV17000017"},
-        {x: new Date(2017, 01, 23), y: 3030, indexLabel: "INV17000018"},
-        {x: new Date(2017, 01, 23), y: 3020, indexLabel: "INV17000019"},
-
-        {x: new Date(2017, 01, 28), y: 8210, indexLabel: "INV17000020"},
-        {x: new Date(2017, 01, 31), y: 8040, indexLabel: "INV17000021"}
-    ];
-
-    // invApp.dataPoints should be derived from invApp.invoices
-    invApp.dataPoints = [
-        {x: new Date(2017, 01, 1), y: 1100, indexLabel: "1"},
-        {x: new Date(2017, 01, 2), y: 2250, indexLabel: "2"},
-
-        {x: new Date(2017, 01, 3), y: 1280, indexLabel: "1"},
-        {x: new Date(2017, 01, 4), y: 1600, indexLabel: "1"},
-
-        {x: new Date(2017, 01, 5), y: 2200, indexLabel: "1"},
-        {x: new Date(2017, 01, 6), y: 2200, indexLabel: "1"},
-        {x: new Date(2017, 01, 7), y: 2200, indexLabel: "1"},
-        {x: new Date(2017, 01, 8), y: 2200, indexLabel: "1"},
-        {x: new Date(2017, 01, 9), y: 2530, indexLabel: "1"},
-        {x: new Date(2017, 01, 11), y: 3040, indexLabel: "1"},
-
-        {x: new Date(2017, 01, 13), y: 4030, indexLabel: "1"},
-        {x: new Date(2017, 01, 14), y: 3040, indexLabel: "1"},
-        {x: new Date(2017, 01, 18), y: 4060, indexLabel: "1"},
-        {x: new Date(2017, 01, 20), y: 4040, indexLabel: "1"},
-        {x: new Date(2017, 01, 22), y: 5100, indexLabel: "1"},
-        {x: new Date(2017, 01, 23), y: 10250, indexLabel: "3"},
-
-        {x: new Date(2017, 01, 28), y: 8210, indexLabel: "1"},
-        {x: new Date(2017, 01, 31), y: 8040, indexLabel: "1"}
-    ];
+    invApp.invoices = [];
 
     invApp.selectedInvoices = [];
 
@@ -94,7 +43,41 @@ app.controller('InvoiceAppController', function ($http, $scope) {
             ]
         });
 
-    invApp.chart.options.data[0].dataPoints = invApp.dataPoints;
-    invApp.chart.render(); //render the chart for the first time
+    invApp.chart.options.data[0].dataPoints = [];
+
+    // Get invoices data from server and render the chart
+    $http.get(apiBaseURL)
+        .then(function success(response) {
+            invApp.invoices = response.data;
+
+            //grouped by date
+            var result = [];
+            invApp.invoices.reduce(function (res, value) {
+                if (!res[value.maturityDate]) {
+                    res[value.maturityDate] = {
+                        qty: 0,
+                        x: value.maturityDate,
+                        y: 0
+                    };
+                    result.push(res[value.maturityDate]);
+                }
+                res[value.maturityDate].qty += 1;
+                res[value.maturityDate].y += value.faceValueInUSD;
+                return res;
+            }, {});
+
+            //construct data points
+            result.forEach(function (item) {
+                invApp.chart.options.data[0].dataPoints.push({
+                    x: new Date(item.x),
+                    y: item.y,
+                    indexLabel: item.qty.toString()
+                });
+            });
+
+            invApp.chart.render();
+        }, function error(response) {
+            alert("Cannot get data from server!" + response);
+        });
 
 });
