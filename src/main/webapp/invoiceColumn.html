@@ -29,12 +29,12 @@
             <tr>
                 <th class="col-md-1">Reference Number</th>
                 <th class="col-md-1">Date</th>
-                <th class="col-md-1">Face Value</th>
+                <th class="col-md-1">Face Value in USD</th>
             </tr>
             </thead>
             <tbody>
             <tr ng-repeat="inv in invApp.selectedInvoices">
-                <td class="col-md-1">{{inv.label}}</td>
+                <td class="col-md-1">{{inv.indexLabel}}</td>
                 <td class="col-md-1">{{inv.x}}</td>
                 <td class="col-md-1">{{inv.y}}</td>
             </tr>
