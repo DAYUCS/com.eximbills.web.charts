@@ -9,4 +9,13 @@
   <httpEndpoint host="*" httpPort="${default.http.port}" httpsPort="${default.https.port}" id="defaultHttpEndpoint"/>
 
   <webApplication location="com.eximbills.web.charts.war" contextRoot="/"/>
+  
+  <cors domain="/rest/invoice"
+      allowedOrigins="http://localhost:8100"
+      allowedMethods="GET, DELETE, POST"
+      allowedHeaders="accept, MyRequestHeader1"
+      exposeHeaders="MyResponseHeader1"
+      allowCredentials="true"
+      maxAge="3600" />
+  
 </server>
