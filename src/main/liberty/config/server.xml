@@ -11,7 +11,7 @@
   <webApplication location="com.eximbills.web.charts.war" contextRoot="/"/>
   
   <cors domain="/rest/invoice"
-      allowedOrigins="http://localhost:8100"
+      allowedOrigins="*"
       allowedMethods="GET, DELETE, POST"
       allowedHeaders="accept, MyRequestHeader1"
       exposeHeaders="MyResponseHeader1"
